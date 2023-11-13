@@ -69,18 +69,14 @@ const fill_table = (details)=> {
     }).join("")
     user_table.innerHTML =
 
-    `<thead>
-    <tr>
+    `<tr>
         <th class="py-2 px-4 bg-blue-600">Name</th>
         <th class="py-2 px-4 bg-blue-600">Email</th>
         <th class="py-2 px-4 bg-blue-600">Password</th>
         <th class="py-2 px-4 bg-blue-600">Dob</th>
         <th class="py-2 px-4 bg-blue-600">Accepted terms?</th>
     </tr>
-    </thead>
-    <tbody class="border-2 border-blue-100">
-    ${user_table_html} 
-    </tbody>`
+    ${user_table_html} `
 }
 
 const get_userdetails = ()=>{
