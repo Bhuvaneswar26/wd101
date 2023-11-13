@@ -31,54 +31,6 @@ const validate_age = (dobInput) => {
     }
 }
 
-let user_details = [];
-
-//function to handle submit
-const submitform = (event) =>{
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const dob = document.getElementById('dob').value;
-    const termsandconditions = document.getElementById('acceptedterms').checked;
-    const pswd = document.getElementById('password').value;
-    const user ={
-        uname :name,
-        uemail:email,
-        udob:dob,
-        utermsandconsitions: termsandconditions ? "Accepted" :"Not accepted",
-        upswd:pswd
-    }
-    user_details.push(user);
-    localStorage.setItem("user_details",JSON.stringify(user_details));
-
-    user_details = get_userdetails();
-    fill_table(user_details);
-}
-
-
-const fill_table = (details)=> {
-    const user_table = document.getElementById('user-table');
-    const user_table_html = details.map((user,index)=>{
-        return (`<tr class="border-2 border-blue-200">
-        <td class="py-2 px-4 bg-blue-200">${user.uname}</td>
-        <td class="py-2 px-4 bg-white-200">${user.uemail}</td>
-        <td class="py-2 px-4 bg-blue-200">${user.upswd}</td>
-        <td class="py-2 px-4 bg-white-200">${user.udob}</td>
-        <td class="py-2 px-6 bg-blue-200">${user.utermsandconsitions}</td>
-        </tr>`)
-    }).join("")
-    user_table.innerHTML =
-
-    `<tr>
-        <th class="py-2 px-4 bg-blue-600">Name</th>
-        <th class="py-2 px-4 bg-blue-600">Email</th>
-        <th class="py-2 px-4 bg-blue-600">Password</th>
-        <th class="py-2 px-4 bg-blue-600">Dob</th>
-        <th class="py-2 px-4 bg-blue-600">Accepted terms?</th>
-    </tr>
-    ${user_table_html} `
-}
-
 const get_userdetails = ()=>{
 
     let local_storage_details = localStorage.getItem("user_details");
@@ -93,11 +45,62 @@ const get_userdetails = ()=>{
     return local_storage_details
 }
 
-user_details = get_userdetails();
+
+//function to handle submit
+const submitform = (event) =>{
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const dob = document.getElementById('dob').value;
+    const termsandconditions = document.getElementById('acceptedterms').checked;
+    const pswd = document.getElementById('password').value;
+    const user ={
+        uname :name,
+        uemail:email,
+        udob:dob,
+        utermsandconsitions: termsandconditions,
+        upswd:pswd
+    }
+    user_details.push(user);
+    localStorage.setItem("user_details",JSON.stringify(user_details));
+    fill_table();
+}
 
 
-fill_table(user_details);
+const fill_table = ()=> {
 
+    const details = get_userdetails();
+
+    const user_table = document.getElementById('user-table');
+    
+    const user_table_html = details.map((user,index)=>{
+        return (`<tr class="border-2 border-blue-200">
+        <td class="py-2 px-4 bg-blue-200">${user.uname}</td>
+        <td class="py-2 px-4 bg-white-200">${user.uemail}</td>
+        <td class="py-2 px-4 bg-blue-200">${user.upswd}</td>
+        <td class="py-2 px-4 bg-white-200">${user.udob}</td>
+        <td class="py-2 px-6 bg-blue-200">${user.utermsandconsitions}</td>
+        </tr>`)
+    }).join("")
+
+
+    user_table.innerHTML =
+    `<table class="w-2/3 mx-auto my-8">
+    <tr class="border-2 border-blue-200">
+        <th class="py-2 px-4 bg-blue-600">Name</th>
+        <th class="py-2 px-4 bg-blue-600">Email</th>
+        <th class="py-2 px-4 bg-blue-600">Password</th>
+        <th class="py-2 px-4 bg-blue-600">Dob</th>
+        <th class="py-2 px-4 bg-blue-600">Accepted terms?</th>
+    </tr>
+    ${user_table_html} 
+    </table>
+    `
+}
+
+
+
+let user_details = get_userdetails();
 
 const email = document.getElementById("email");
 
@@ -111,6 +114,5 @@ const submit = document.getElementById("reg-form");
 
 submit.addEventListener('submit',submitform);
 
-
-
+fill_table();
 
